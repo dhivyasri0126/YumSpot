@@ -1,0 +1,159 @@
+.booking-page {
+  min-height: 100vh;
+
+  background-size: cover;
+  background-position: center;
+
+  transition: 1s ease-in-out;
+}
+
+.booking-overlay {
+  min-height: 100vh;
+
+  background: rgba(0, 0, 0, 0.65);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+}
+
+/* CONTAINER */
+
+.booking-container {
+  width: 450px;
+
+  padding: 40px 35px;
+
+  border-radius: 25px;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(15px);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  color: white;
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.booking-container h1 {
+  text-align: center;
+
+  font-size: 42px;
+
+  margin-bottom: 30px;
+
+  color: #ffb703;
+
+  font-family: "Brush Script MT", cursive;
+
+  letter-spacing: 1px;
+}
+
+/* FORM */
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+/* INPUTS */
+
+.booking-form input,
+.booking-form select {
+  width: 100%;
+
+  padding: 15px 18px;
+
+  border: none;
+  outline: none;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.15);
+
+  color: white;
+
+  font-size: 16px;
+
+  backdrop-filter: blur(10px);
+
+  transition: 0.3s;
+}
+
+/* PLACEHOLDER */
+
+.booking-form input::placeholder {
+  color: #e5e5e5;
+}
+
+/* SELECT */
+
+.booking-form select {
+  appearance: none;
+
+  cursor: pointer;
+}
+
+.booking-form select option {
+  background: white;
+
+  color: black;
+}
+
+/* INPUT FOCUS */
+
+.booking-form input:focus,
+.booking-form select:focus {
+  border: 1px solid #ffb703;
+
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* BUTTON */
+
+.booking-form button {
+  margin-top: 10px;
+
+  padding: 15px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #ffb703;
+
+  color: black;
+
+  font-size: 18px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.booking-form button:hover {
+  background: white;
+
+  transform: scale(1.03);
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .booking-container {
+    width: 100%;
+
+    padding: 30px 20px;
+  }
+
+  .booking-container h1 {
+    font-size: 34px;
+  }
+}
