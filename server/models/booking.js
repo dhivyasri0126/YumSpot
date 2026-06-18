@@ -1,22 +1,38 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const bookingSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+const bookingSchema = new mongoose.Schema(
+  {
+    userName: {
+      type: String,
+      required: true
+    },
+
+    hotelName: {
+      type: String,
+      required: true
+    },
+
+    guests: {
+      type: Number,
+      required: true
+    },
+
+    bookingDate: {
+      type: String,
+      required: true
+    },
+
+    status: {
+      type: String,
+
+      default: "Pending"
+    }
   },
 
-  name: String,
-  email: String,
-  phone: String,
-  date: String,
-  time: String,
-  guests: String,
+  { timestamps: true }
+);
 
-  status: {
-    type: String,
-    default: "Pending",
-  },
-});
-
-module.exports = mongoose.model("Booking", bookingSchema);
+export default mongoose.model(
+  "Booking",
+  bookingSchema
+);

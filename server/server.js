@@ -1,20 +1,32 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 
-const authRoutes = require("./routes/authRoutes");
-const bookingRoutes = require("./routes/bookingRoutes");
+import connectDB from "./config/db.js";
+
+import bookingRoutes from "./routes/bookingRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import hotelRoutes from "./routes/hotelRoutes.js";
+
+dotenv.config();
+
+connectDB();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect("mongodb://localhost:27017/");
-
-app.use("/api/auth", authRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/hotels", hotelRoutes);
 
-app.listen(5000, () => {
-  console.log("Server running");
+app.get("/", (req, res) => {
+  res.send("Restaurant Booking API is running");
+});
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

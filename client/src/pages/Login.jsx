@@ -1,22 +1,44 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 
-import API from "../api/axios";
+import axios from "axios";
 
-import "./Auth.css";
+import { Link, useNavigate } from "react-router-dom";
+
+import { AuthContext } from "../context/AuthContext";
+
+import bg1 from "../assets/bg1.jpg";
+import bg2 from "../assets/bg2.jpg";
+import bg3 from "../assets/bg3.jpg";
+import bg4 from "../assets/bg4.jpg";
 
 function Login() {
   const navigate = useNavigate();
 
+  const { login } = useContext(AuthContext);
+
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
+    password: ""
   });
+
+  const images = [bg1, bg2, bg3, bg4];
+
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage(
+        (prev) => (prev + 1) % images.length
+      );
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
@@ -24,44 +46,90 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await API.post("/auth/login", formData);
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        formData
+      );
 
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", res.data.role);
+      login(res.data);
 
-      if (res.data.role === "admin") {
-        navigate("/admin/bookings");
-      } else {
-        navigate("/mybookings");
-      }
+      alert(res.data.message);
+
+      navigate("/home");
+
     } catch (error) {
+
+      alert(
+        error.response?.data?.message ||
+        "Login failed"
+      );
+
       console.log(error);
     }
   };
 
   return (
     <div className="auth-page">
-      <div className="auth-box">
-        <h1>Login</h1>
+
+      {images.map((image, index) => (
+        <div
+          key={index}
+          className={`slide ${
+            index === currentImage
+              ? "active"
+              : ""
+          }`}
+          style={{
+            backgroundImage: `url(${image})`
+          }}
+        ></div>
+      ))}
+
+      <div className="overlay"></div>
+
+      <div className="glass-card">
+
+        <h1>YumSpot</h1>
+
+        <h2>Login</h2>
 
         <form onSubmit={handleSubmit}>
+
           <input
             type="email"
             name="email"
-            placeholder="Enter Email"
+            placeholder="Enter email"
+            value={formData.email}
             onChange={handleChange}
+            required
           />
 
           <input
             type="password"
             name="password"
-            placeholder="Enter Password"
+            placeholder="Enter password"
+            value={formData.password}
             onChange={handleChange}
+            required
           />
 
-          <button type="submit">Login</button>
+          <button type="submit">
+            Login
+          </button>
+
         </form>
+
+        <p>
+          New user?
+
+          <Link to="/signup">
+            Register here
+          </Link>
+
+        </p>
+
       </div>
+
     </div>
   );
 }

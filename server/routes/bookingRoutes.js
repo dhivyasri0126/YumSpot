@@ -1,44 +1,150 @@
-const express = require("express");
-const Booking = require("../models/Booking");
+import express from "express";
+
+import Booking from "../models/Booking.js";
 
 const router = express.Router();
 
+/* CREATE BOOKING */
+
 router.post("/", async (req, res) => {
+
   try {
-    const booking = await Booking.create(req.body);
-    res.status(201).json(booking);
-  } catch (error) {
-    res.status(500).json({
-      message: "Booking failed",
-      error: error.message
-    });
+
+    const created =
+      await Booking.create(
+        req.body
+      );
+
+    return res
+      .status(201)
+      .json(created);
+
   }
+
+  catch (error) {
+
+    return res
+      .status(400)
+      .json({
+        message:
+          error.message
+      });
+
+  }
+
 });
+
+
+/* GET ALL BOOKINGS */
 
 router.get("/", async (req, res) => {
+
   try {
-    const bookings = await Booking.find().sort({ createdAt: -1 });
-    res.status(200).json(bookings);
-  } catch (error) {
-    res.status(500).json({
-      message: "Failed to fetch bookings",
-      error: error.message
-    });
+
+    const bookings =
+      await Booking.find()
+      .sort({
+        createdAt: -1
+      });
+
+    return res
+      .status(200)
+      .json(bookings);
+
   }
+
+  catch (error) {
+
+    return res
+      .status(500)
+      .json({
+        message:
+          error.message
+      });
+
+  }
+
 });
 
-router.delete("/:id", async (req, res) => {
-  try {
-    await Booking.findByIdAndDelete(req.params.id);
-    res.status(200).json({
-      message: "Booking cancelled successfully"
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Failed to cancel booking",
-      error: error.message
-    });
-  }
-});
 
-module.exports = router;
+/* GET MY BOOKINGS */
+
+router.get(
+  "/mybookings/:userName",
+
+  async (req, res) => {
+
+    try {
+
+      const bookings =
+        await Booking.find({
+
+          userName:
+            req.params.userName
+
+        })
+
+        .sort({
+          createdAt: -1
+        });
+
+      return res
+        .status(200)
+        .json(bookings);
+
+    }
+
+    catch (error) {
+
+      return res
+        .status(500)
+        .json({
+          message:
+            error.message
+        });
+
+    }
+
+  }
+);
+
+
+/* DELETE BOOKING */
+
+router.delete(
+  "/:id",
+
+  async (req, res) => {
+
+    try {
+
+      await Booking.findByIdAndDelete(
+        req.params.id
+      );
+
+      return res
+        .status(200)
+        .json({
+
+          message:
+            "Booking deleted"
+
+        });
+
+    }
+
+    catch (error) {
+
+      return res
+        .status(500)
+        .json({
+          message:
+            error.message
+        });
+
+    }
+
+  }
+);
+
+export default router;

@@ -1,140 +1,141 @@
 import { useEffect, useState } from "react";
 
-import API from "../api/axios";
-
-import "./Booking.css";
+import Navbar from "../components/Navbar";
 
 function Booking() {
-  const images = [
-    "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
-    "https://images.unsplash.com/photo-1552566626-52f8b828add9",
-    "https://images.unsplash.com/photo-1414235077428-338989a2e8c0",
-  ];
 
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  const [bookingData, setBookingData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    date: "",
-    time: "",
-    guests: "",
-  });
+  const [bookings, setBookings] =
+    useState([]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % images.length);
-    }, 3000);
 
-    return () => clearInterval(interval);
+    fetchBookings();
+
   }, []);
 
-  const handleChange = (e) => {
-    setBookingData({
-      ...bookingData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const fetchBookings = async () => {
 
     try {
-      const token = localStorage.getItem("token");
 
-      await API.post("/bookings", bookingData, {
-        headers: {
-          authorization: token,
-        },
-      });
+      const user = JSON.parse(
+        localStorage.getItem("user")
+      );
 
-      alert("Booking Success");
-    } catch (error) {
-      console.log(error);
+      const response =
+        await fetch(
+
+          `http://localhost:5000/api/bookings/mybookings/${user.name}`
+
+        );
+
+      const data =
+        await response.json();
+
+      setBookings(data);
+
     }
+
+    catch (error) {
+
+      console.log(error);
+
+    }
+
   };
 
   return (
-    <div
-      className="booking-page"
-      style={{
-        backgroundImage: `url(${images[currentSlide]})`,
-      }}
-    >
-      <div className="booking-overlay">
-        <div className="booking-container">
-          <h1>Book Table</h1>
 
-          <form onSubmit={handleSubmit} className="booking-form">
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              onChange={handleChange}
-            />
+    <div>
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              onChange={handleChange}
-            />
+      <Navbar />
 
-            <input
-              type="text"
-              name="phone"
-              placeholder="Phone"
-              onChange={handleChange}
-            />
+      <div
+        style={{
+          padding: "100px 30px"
+        }}
+      >
 
-            <input
-              type="date"
-              name="date"
-              onChange={handleChange}
-            />
+        <h1>
 
-            <input
-              type="time"
-              name="time"
-              onChange={handleChange}
-            />
-            <select
-  name="guests"
-  onChange={handleChange}
-  defaultValue=""
->
-  <option value="" disabled>
-    Select Guests
-  </option>
+          My Bookings
 
-  <option value="1">
-    1 Guest
-  </option>
+        </h1>
 
-  <option value="2">
-    2 Guests
-  </option>
+        {bookings.length === 0 ? (
 
-  <option value="3">
-    3 Guests
-  </option>
+          <h2>
 
-  <option value="4">
-    4 Guests
-  </option>
+            No bookings yet
 
-  <option value="5+">
-    5+ Guests
-  </option>
-</select>
-            
+          </h2>
 
-            <button type="submit">Reserve Table</button>
-          </form>
-        </div>
+        ) : (
+
+          bookings.map(
+
+            (booking) => (
+
+              <div
+                key={booking._id}
+
+                style={{
+
+                  border:
+                    "1px solid gray",
+
+                  padding: "20px",
+
+                  marginBottom: "20px",
+
+                  borderRadius:
+                    "10px"
+
+                }}
+              >
+
+                <h2>
+
+                  {booking.hotelName}
+
+                </h2>
+
+                <p>
+
+                  👤 {booking.userName}
+
+                </p>
+
+                <p>
+
+                  👥 Guests :
+                  {booking.guests}
+
+                </p>
+
+                <p>
+
+                  📅 {booking.bookingDate}
+
+                </p>
+
+                <p>
+
+                  📌 {booking.status}
+
+                </p>
+
+              </div>
+
+            )
+
+          )
+
+        )}
+
       </div>
+
     </div>
+
   );
 }
 
