@@ -24,7 +24,7 @@ function Booking() {
       const response =
         await fetch(
 
-          `http://localhost:5000/api/bookings/mybookings/${user.name}`
+          `${import.meta.env.VITE_API_BASE || "http://localhost:5000/api"}/bookings/mybookings/${user.name}`
 
         );
 

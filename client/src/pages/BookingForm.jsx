@@ -84,7 +84,7 @@ function BookingForm() {
 
       const response = await fetch(
 
-        "http://localhost:5000/api/bookings",
+        `${import.meta.env.VITE_API_BASE || "http://localhost:5000/api"}/bookings`,
 
         {
 

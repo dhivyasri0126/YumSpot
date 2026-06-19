@@ -7,7 +7,7 @@ function AdminBookings() {
 
   const fetchBookings = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/bookings");
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE || "http://localhost:5000/api"}/bookings`);
       setBookings(res.data);
     } catch (error) {
       console.log(error);
@@ -16,7 +16,7 @@ function AdminBookings() {
 
   const deleteBooking = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/bookings/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_BASE || "http://localhost:5000/api"}/bookings/${id}`);
       fetchBookings();
     } catch (error) {
       console.log(error);
