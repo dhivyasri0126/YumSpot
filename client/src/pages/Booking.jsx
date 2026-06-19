@@ -45,15 +45,17 @@ function Booking() {
 
   return (
 
-    <div>
+    <div className="bookings-page">
 
-      <Navbar />
+  <Navbar />
 
-      <div
-        style={{
-          padding: "100px 30px"
-        }}
-      >
+  <div className="bookings-container">
+
+    <h1 className="bookings-title">
+
+      My Bookings
+
+    </h1>
 
         <h1>
 
@@ -61,76 +63,65 @@ function Booking() {
 
         </h1>
 
-        {bookings.length === 0 ? (
+{bookings.length === 0 ? (
 
-          <h2>
+  <h2 className="empty-booking">
 
-            No bookings yet
+    No bookings yet 🍽️
 
-          </h2>
+  </h2>
 
-        ) : (
+) : (
 
-          bookings.map(
+  <div className="bookings-grid">
 
-            (booking) => (
+    {bookings.map((booking) => (
 
-              <div
-                key={booking._id}
+      <div
 
-                style={{
+        key={booking._id}
 
-                  border:
-                    "1px solid gray",
+        className="booking-card"
 
-                  padding: "20px",
+      >
 
-                  marginBottom: "20px",
+        <h2>
 
-                  borderRadius:
-                    "10px"
+          {booking.hotelName}
 
-                }}
-              >
+        </h2>
 
-                <h2>
+        <p>
 
-                  {booking.hotelName}
+          👤 User: {booking.userName}
 
-                </h2>
+        </p>
 
-                <p>
+        <p>
 
-                  👤 {booking.userName}
+          👥 Guests: {booking.guests}
 
-                </p>
+        </p>
 
-                <p>
+        <p>
 
-                  👥 Guests :
-                  {booking.guests}
+          📅 Date: {booking.bookingDate}
 
-                </p>
+        </p>
 
-                <p>
+        <div className="booking-status">
 
-                  📅 {booking.bookingDate}
+          📌 {booking.status}
 
-                </p>
+        </div>
 
-                <p>
+      </div>
 
-                  📌 {booking.status}
+    ))}
 
-                </p>
+  </div>
 
-              </div>
-
-            )
-
-          )
-
-        )}
+)}
 
       </div>
 

@@ -25,7 +25,7 @@ const hotels = [
     foods: [
       {
         name: "Chicken Briyani",
-        image: "https://images.unsplash.com/photo-1563379091339-03246963d96c",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuWkqR087ENNtJpkaDYBJ5iZx7BeaUJXfjzA&s",
         price: 320
       }
     ]

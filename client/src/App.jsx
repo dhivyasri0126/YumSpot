@@ -6,7 +6,8 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Hotels from "./pages/Hotels";
 import HotelDetails from "./pages/HotelDetails";
-import Bookings from "./pages/Booking";
+import Booking from "./pages/Booking";
+import BookingForm from "./pages/BookingForm";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -72,10 +73,25 @@ function App() {
           path="/my-bookings"
           element={
             <ProtectedRoute>
-              <Bookings />
+              <Booking/>
             </ProtectedRoute>
           }
         />
+        <Route
+
+  path="/booking"
+
+  element={
+
+    <ProtectedRoute>
+
+      <BookingForm />
+
+    </ProtectedRoute>
+
+  }
+
+/>
 
       </Routes>
     </BrowserRouter>

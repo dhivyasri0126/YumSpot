@@ -80,32 +80,23 @@ function Home() {
               unforgettable dining experiences.
 
             </p>
+<div className="hero-buttons">
 
-            <div className="hero-buttons">
+  <button
+    onClick={() => navigate("/hotels")}
+  >
+    Explore Restaurants
+  </button>
 
-              <button
-                onClick={() =>
-                  navigate("/hotels")
-                }
-              >
+  <button
+    className="secondary-btn"
 
-                Explore Restaurants
+    onClick={() => navigate("/booking")}
+  >
+    Book Table
+  </button>
 
-              </button>
-
-              <button
-                className="secondary-btn"
-
-                onClick={() =>
-                  navigate("/bookings")
-                }
-              >
-
-                Book Table
-
-              </button>
-
-            </div>
+</div>
 
           </div>
 
